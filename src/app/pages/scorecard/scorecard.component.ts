@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';   
+import { AppSettings } from '../../app.settings';
 
 @Component({
   templateUrl: 'app/pages/scorecard/scorecard.component.html'
@@ -8,8 +9,7 @@ export class ScorecardComponent {
 	info = 'Scorecard';
     pageId: string;
     cardId: string; 
-    public svgTemplateUrl = 'app/assets/images/page{imageId}.svg'; 
-    public svgPath = this.svgTemplateUrl.replace("{imageId}","2");
+    public svgPath = AppSettings.SVG_TEMPLATE_LOCAL_ENDPOINT.replace("{imageId}","2");
     imageId = "2";
 
 	private navOptions = [

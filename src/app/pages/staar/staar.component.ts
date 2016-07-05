@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Kchart } from '../../shared/kendo/kchart';  
+import { kchart } from '../../shared/kendo/kchart';  
 
 @Component({
     templateUrl: 'app/pages/staar/staar.component.html',
-    directives: [Kchart]
+    directives: [kchart]
 })
 export class StaarComponent {
 

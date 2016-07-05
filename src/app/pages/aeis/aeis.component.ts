@@ -1,15 +1,16 @@
 import { Component, Inject } from '@angular/core';
-import { Kchart }   from '../../shared/kendo/kchart'; 
+import { kchart }   from '../../shared/kendo/kchart'; 
 import { kgrid }     from '../../shared/kendo/grid';  
 import { Observable }     from 'rxjs/Observable'; 
 import { AeisDictionary, AeisService }  from './aeis.service';
 import { SelectListItem } from '../../shared/select.component';
+import { AppSettings } from  '../../app.settings';
 
 declare var jQuery: any;
 
 @Component({
   templateUrl: 'app/pages/aeis/aeis.component.html',
-  directives: [kgrid, Kchart],
+  directives: [kgrid, kchart],
   providers: [AeisService]
 })
 
@@ -20,10 +21,7 @@ export class AeisComponent {
     options: any;
     yearOptions: any;
     tableOptions: any;
-    chartOptions: any;
-    listTableUrl : string;
-    selectedTableUrl : string; 
-    baseApiUrl = "http://commitstaging.azurewebsites.net/";
+    chartOptions: any; 
     tables : SelectListItem[]; 
     years = [
         new SelectListItem (null,"Select Year"), 
@@ -53,8 +51,6 @@ export class AeisComponent {
 
     constructor(public _aeisService: AeisService) {           
         this.setUpChartOptions();
-        this.listTableUrl = this.baseApiUrl + "api/dictionary/ListTables?year={year}"; 
-        this.selectedTableUrl = this.baseApiUrl + "api/dictionary/Get?selectedTable={selectedTable}&selectedYear={selectedYear}";
     } 
       
     selectedTable = null;
@@ -65,8 +61,8 @@ export class AeisComponent {
         this.selectedYear = selectedValue; 
         if (!this.selectedYear || this.selectedYear == "") return;
 
-        let url : string;
-        url = this.listTableUrl.replace("{year}",this.selectedYear)
+        let url : string; 
+        url = AppSettings.LIST_TABLE_API_ENDPOINT.replace("{year}",this.selectedYear);
         console.log(url);
 
         this._aeisService.getTablesByYear(url)
@@ -86,7 +82,7 @@ export class AeisComponent {
     private changeTable(selectedTable: string) {
         if (!selectedTable || !selectedTable) return;
         let url : string;
-        url = this.selectedTableUrl.replace("{selectedTable}",selectedTable).replace("{selectedYear}",this.selectedYear);
+        url = AppSettings.SELECTED_TABLE_API_ENDPOINT.replace("{selectedTable}",selectedTable).replace("{selectedYear}",this.selectedYear);
         console.log(url);      
         this._aeisService.getDictionaryByTable(url)
         .subscribe(item => this.onDictionaryAdded(item)); 

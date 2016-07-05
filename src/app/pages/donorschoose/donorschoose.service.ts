@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response, Jsonp } from '@angular/http'
 import { Observable } from 'rxjs/Observable';
+import { AppSettings } from '../../app.settings';
 
 export class County{
     public County : string;
@@ -38,13 +39,11 @@ export class DonorChooseObject
 
 @Injectable()
 export class DonorChooseService {
-
-    public _donorChooseUrl = "http://api.donorschoose.org/common/json_feed.html?state=TX&Community={0}:1&APIKey=vmspm5ygamje&concise=true&description=true";
-
+    
     constructor(private _http: Http, private _jsonp : Jsonp) {}
  
     public getDonorResult(donor:string): Observable<DonorChooseObject> { 
-        let url = this._donorChooseUrl.replace("{0}", donor); 
+        let url = AppSettings.DONOR_CHOOSE_API_ENDPOINT.replace("{0}", donor); 
         return this._http.get(url)
         .map((response: Response) => <DonorChooseObject> response.json())
          .do(data => console.log('All: ' +  JSON.stringify(data)))
@@ -52,7 +51,7 @@ export class DonorChooseService {
     }
 
     public getCountyOptions(): Observable<County[]> {
-        return this._http.get("app/assets/data/donorsCounties.json")
+        return this._http.get(AppSettings.DONOR_COUNTIES_LOCAL_JSON_ENDPOINT)
          .map((response: Response) => <County[]> response.json())
          .do(data => console.log('All: ' +  JSON.stringify(data)))
          .catch(this.handleError);

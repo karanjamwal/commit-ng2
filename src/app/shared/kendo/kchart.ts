@@ -13,7 +13,7 @@ declare var jQuery:any;
     template: '<div></div>'
 })
 
-export class Kchart implements  OnInit {
+export class kchart implements  OnInit {
   constructor(@Host() private elm: ElementRef) {
     }
 
