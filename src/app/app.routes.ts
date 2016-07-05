@@ -8,7 +8,7 @@ import { ScorecardComponent }       from './pages/scorecard/scorecard.component'
 import { DonorsChooseComponent }    from './pages/donorschoose/donorschoose.component'; 
 
 export const routes : RouterConfig  = [  
-    { path: 'home',  component: HomeComponent },
+    { path: '',  component: HomeComponent },
     { path: 'bulkdata',  component: BulkDataComponent },
     { path: 'staar',  component: StaarComponent },
     { path: 'aeis',  component: AeisComponent },
